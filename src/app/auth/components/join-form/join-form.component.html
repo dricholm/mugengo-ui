@@ -1,0 +1,63 @@
+<form [formGroup]="joinForm" (submit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="name">Display name</label>
+    <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
+      [class.is-invalid]="this.submitClicked && this.joinForm.controls.name.errors">
+    <small id="nameHelp" class="form-text text-muted">This can be changed later.</small>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.name.errors">
+      Please enter a name.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your email address"
+      [class.is-invalid]="this.submitClicked && this.joinForm.controls.email.errors">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.email.errors">
+      Please enter a valid email address.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+      placeholder="Your password" [class.is-invalid]="this.submitClicked && this.joinForm.controls.password.errors">
+    <small id="passwordHelp" class="form-text text-muted">Password must be at least 6 characters long.</small>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.password.errors">
+      Please enter a password with at least 6 characters.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="passwordConfirm">Confirm password</label>
+    <input formControlName="passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="Your password again"
+      [class.is-invalid]="this.submitClicked && this.joinForm.errors">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.errors">
+      Please enter the same password here.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="loading || success">
+    Join
+  </button>
+</form>
+
+<div class="alert alert-success mt-3 mb-0" *ngIf="success">
+  <h5 class="alert-heading">Success</h5>
+  Thank you for joining Mugengo! You can now proceed to <a routerLink="/sign-in">sign in</a>.
+</div>
+
+<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error">
+  <ng-container *ngSwitchCase="400">
+    <h5 class="alert-heading">Invalid data</h5>
+    Please check the input fields again. If this error persists please contact us.
+  </ng-container>
+  <ng-container *ngSwitchCase="500">
+    <h5 class="alert-heading">Server error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <h5 class="alert-heading">Unknown error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+</div>

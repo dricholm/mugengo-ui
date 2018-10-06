@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+      <div class="card my-3">
+        <div class="card-body">
+          <h4 class="card-title">Join Mugengo</h4>
+          <mgg-join-form [error]="error$ | async" [loading]="loading$ | async" [success]="success$ | async" (submit)="onSubmit($event)"></mgg-join-form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
