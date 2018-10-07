@@ -1,1 +1,5 @@
-export { JoinForm } from './join-form.interface';
+export { JoinRequest } from './join-request.interface';
+export { JwtPayload } from './jwt-payload.interface';
+export { SignInForm } from './sign-in-form.interface';
+export { TokenRequest } from './token-request.interface';
+export { TokenResponse } from './token-response.interface';

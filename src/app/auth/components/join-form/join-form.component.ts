@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { trigger, transition, useAnimation } from '@angular/animations';
 
 import { confirmValidator } from '@app/shared/validators';
-import { JoinForm } from '@app/auth/interfaces';
+import { JoinRequest } from '@app/auth/interfaces';
 import { fadeInAnimation, fadeOutAnimation } from '@app/shared/animations';
 
 @Component({
@@ -40,7 +40,7 @@ export class JoinFormComponent {
   @Input()
   success: boolean;
   @Output()
-  submit: EventEmitter<JoinForm> = new EventEmitter<JoinForm>();
+  submit: EventEmitter<JoinRequest> = new EventEmitter<JoinRequest>();
 
   joinForm: FormGroup = new FormGroup(
     {

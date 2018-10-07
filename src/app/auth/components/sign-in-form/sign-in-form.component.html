@@ -1,0 +1,40 @@
+<form [formGroup]="signInForm" (submit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your email address"
+      [class.is-invalid]="this.submitClicked && this.signInForm.controls.email.errors" autofocus>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.email.errors" @fade>
+      Please enter a valid email address.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+      placeholder="Your password" [class.is-invalid]="this.submitClicked && this.signInForm.controls.password.errors">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.password.errors" @fade>
+      Please enter at least 6 characters.
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary px-5" [disabled]="loading || success">
+      Sign In
+    </button>
+  </div>
+</form>
+
+<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @fade>
+  <ng-container *ngSwitchCase="400">
+    <h5 class="alert-heading">Sign In failed</h5>
+    Please check your email and password.
+  </ng-container>
+  <ng-container *ngSwitchCase="500">
+    <h5 class="alert-heading">Server error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <h5 class="alert-heading">Unknown error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+</div>

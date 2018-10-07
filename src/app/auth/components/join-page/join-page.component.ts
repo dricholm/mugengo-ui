@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-import { JoinForm } from '@app/auth/interfaces';
+import { JoinRequest } from '@app/auth/interfaces';
 import { AuthQuery, AuthService } from '@app/auth/state';
 
 @Component({
@@ -15,7 +15,7 @@ export class JoinPageComponent {
   loading$ = this.authQuery.loading$;
   success$ = this.authQuery.success$;
 
-  onSubmit(data: JoinForm) {
-    this.authService.join(data).subscribe();
+  onSubmit(data: JoinRequest) {
+    this.authService.join$(data).subscribe();
   }
 }

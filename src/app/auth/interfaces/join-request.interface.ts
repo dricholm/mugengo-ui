@@ -1,4 +1,4 @@
-export interface JoinForm {
+export interface JoinRequest {
   name: string;
   email: string;
   password: string;

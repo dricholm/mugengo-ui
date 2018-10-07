@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="name">Display name</label>
     <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
-      [class.is-invalid]="this.submitClicked && this.joinForm.controls.name.errors">
+      [class.is-invalid]="this.submitClicked && this.joinForm.controls.name.errors" autofocus>
     <small id="nameHelp" class="form-text text-muted">This can be changed later.</small>
     <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.name.errors" @fade>
       Please enter a name.
@@ -37,9 +37,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="loading || success">
-    Join
-  </button>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary px-5" [disabled]="loading || success">
+      Join
+    </button>
+  </div>
 </form>
 
 <div class="alert alert-success mt-3 mb-0" *ngIf="success" @fade>
