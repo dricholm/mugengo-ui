@@ -6,11 +6,27 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { trigger, transition, useAnimation } from '@angular/animations';
 
 import { confirmValidator } from '@app/shared/validators';
 import { JoinForm } from '@app/auth/interfaces';
+import { fadeInAnimation, fadeOutAnimation } from '@app/shared/animations';
 
 @Component({
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        useAnimation(fadeInAnimation, {
+          params: { time: '800ms ease-in' },
+        }),
+      ]),
+      transition(':leave', [
+        useAnimation(fadeOutAnimation, {
+          params: { time: '800ms ease-out' },
+        }),
+      ]),
+    ]),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mgg-join-form',
   templateUrl: './join-form.component.html',

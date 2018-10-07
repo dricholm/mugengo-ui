@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { JoinFormComponent } from './join-form.component';
 import { JoinForm } from '@app/auth/interfaces';
@@ -11,7 +12,7 @@ describe('JoinFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JoinFormComponent],
-      imports: [ReactiveFormsModule],
+      imports: [NoopAnimationsModule, ReactiveFormsModule],
     }).compileComponents();
   }));
 
