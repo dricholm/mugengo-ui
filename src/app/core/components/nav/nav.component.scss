@@ -1,0 +1,76 @@
+@import '~styles/declarations';
+
+:host {
+  background-color: $white;
+  border-top: 1px solid map-get($grays, '400');
+  display: block;
+
+  @include media-breakpoint-up(md) {
+    border-bottom: 1px solid map-get($grays, '400');
+    border-top: none;
+  }
+}
+
+ul {
+  display: flex;
+  font-size: $font-size-lg;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    flex: 1 1 auto;
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+      flex: initial;
+    }
+
+    a {
+      color: map-get($colors, 'gray');
+      display: block;
+      padding: map-get($spacers, 3) 0;
+      transition: color 125ms $standard-easing;
+
+      @include hover-focus() {
+        color: $primary;
+        text-decoration: none;
+      }
+
+      @include media-breakpoint-up(md) {
+        padding: map-get($spacers, 3);
+      }
+
+      &.active {
+        color: $primary;
+        position: relative;
+
+        &::after {
+          animation: menu-bar 125ms $standard-easing forwards;
+          content: '';
+          background-color: $primary;
+          border-radius: $border-radius;
+          height: 3px;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
+
+          @include media-breakpoint-up(md) {
+            bottom: 0;
+            top: initial;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes menu-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}

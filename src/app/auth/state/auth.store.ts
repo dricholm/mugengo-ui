@@ -56,4 +56,16 @@ export class AuthStore extends Store<AuthState> {
       success: true,
     });
   }
+
+  @action({ type: 'Sign Out' })
+  signOut() {
+    this.update({
+      accessToken: null,
+      error: null,
+      jwtPayload: null,
+      loading: false,
+      refreshToken: null,
+      success: false,
+    });
+  }
 }

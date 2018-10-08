@@ -1,0 +1,26 @@
+@import '~styles/declarations';
+
+:host {
+  display: grid;
+  grid-template-areas:
+    'main'
+    'nav';
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+
+  @include media-breakpoint-up(md) {
+    grid-template-areas:
+      'nav'
+      'main';
+    grid-template-rows: auto 1fr;
+  }
+}
+
+nav {
+  grid-area: nav;
+}
+
+main {
+  grid-area: main;
+}

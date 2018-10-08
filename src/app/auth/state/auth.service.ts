@@ -12,13 +12,28 @@ import {
   JwtPayload,
 } from '@app/auth/interfaces';
 import { AuthDataService } from '@app/auth/services/auth-data.service';
+import { StorageService } from '@app/core/services/storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(
     private authStore: AuthStore,
-    private authDataService: AuthDataService
+    private authDataService: AuthDataService,
+    private storageService: StorageService
   ) {}
+
+  init() {
+    if (!this.storageService.accessToken || !this.storageService.refreshToken) {
+      return;
+    }
+
+    const jwtPayload: JwtPayload = jwtDecode(this.storageService.accessToken);
+    this.authStore.token(
+      this.storageService.accessToken,
+      this.storageService.refreshToken,
+      jwtPayload
+    );
+  }
 
   join$(data: JoinRequest): Observable<void> {
     this.authStore.startQuery();
@@ -44,6 +59,8 @@ export class AuthService {
           response.refresh_token,
           jwtPayload
         );
+        this.storageService.accessToken = response.access_token;
+        this.storageService.refreshToken = response.refresh_token;
         return null;
       }),
       catchError((error: HttpErrorResponse) => {
@@ -51,5 +68,20 @@ export class AuthService {
         return of();
       })
     );
+  }
+
+  signOut() {
+    this.authDataService
+      .signOut$({ refreshToken: this.storageService.refreshToken })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error during Sign Out request', error);
+          return of(null);
+        })
+      )
+      .subscribe();
+    this.authStore.signOut();
+    this.storageService.accessToken = null;
+    this.storageService.refreshToken = null;
   }
 }

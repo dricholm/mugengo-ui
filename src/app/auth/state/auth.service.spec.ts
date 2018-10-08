@@ -6,6 +6,7 @@ import {
 
 import { AuthService, AuthStore } from '@app/auth/state';
 import { TokenResponse, JwtPayload } from '@app/auth/interfaces';
+import { StorageService } from '@app/core/services/storage.service';
 
 describe('AuthService', () => {
   let httpMock: HttpTestingController;
@@ -22,12 +23,65 @@ describe('AuthService', () => {
     httpMock.verify();
   });
 
+  it('should init store with storage tokens', inject(
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      const accessToken: string =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+        'eyJlbWFpbCI6InVzZXJAbXVnZW5nby5jb20iLCJleHAiOjYwMCwiaWF0IjoxMDB9.' +
+        'Z-9D_0jRCRlhEk3MNQNHddWxLGBHCeqvo4sr3uB3Upw';
+      const refreshToken = 'refreshToken';
+      const jwtPayload: JwtPayload = {
+        email: 'user@mugengo.com',
+        exp: 600,
+        iat: 100,
+      };
+      spyOnProperty(storageService, 'accessToken', 'get').and.returnValue(
+        accessToken
+      );
+      spyOnProperty(storageService, 'refreshToken', 'get').and.returnValue(
+        refreshToken
+      );
+      spyOn(authStore, 'token');
+
+      authService.init();
+      expect(authStore.token).toHaveBeenCalledWith(
+        accessToken,
+        refreshToken,
+        jwtPayload
+      );
+    }
+  ));
+
+  it('should not set token in store when it is not in storage', inject(
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      spyOnProperty(storageService, 'accessToken', 'get').and.returnValue(null);
+      spyOnProperty(storageService, 'refreshToken', 'get').and.returnValue(
+        null
+      );
+      spyOn(authStore, 'token');
+
+      authService.init();
+      expect(authStore.token).toHaveBeenCalledTimes(0);
+    }
+  ));
+
   it('should join', inject(
     [AuthService, AuthStore],
     (authService: AuthService, authStore: AuthStore) => {
       spyOn(authStore, 'startQuery');
       spyOn(authStore, 'error');
       spyOn(authStore, 'success');
+
       authService
         .join$({
           email: 'user@mugengo.com',
@@ -51,6 +105,7 @@ describe('AuthService', () => {
       spyOn(authStore, 'startQuery');
       spyOn(authStore, 'error');
       spyOn(authStore, 'success');
+
       authService
         .join$({
           email: 'user@mugengo.com',
@@ -71,8 +126,14 @@ describe('AuthService', () => {
   ));
 
   it('should sign in', inject(
-    [AuthService, AuthStore],
-    (authService: AuthService, authStore: AuthStore) => {
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      const accessSpy = spyOnProperty(storageService, 'accessToken', 'set');
+      const refreshSpy = spyOnProperty(storageService, 'refreshToken', 'set');
       spyOn(authStore, 'startQuery');
       spyOn(authStore, 'error');
       spyOn(authStore, 'token');
@@ -90,6 +151,7 @@ describe('AuthService', () => {
         exp: 600,
         iat: 100,
       };
+
       authService
         .token$({
           email: 'user@mugengo.com',
@@ -104,10 +166,31 @@ describe('AuthService', () => {
               response.refresh_token,
               jwtPayload
             );
+            expect(accessSpy).toHaveBeenCalledWith(response.access_token);
+            expect(refreshSpy).toHaveBeenCalledWith(response.refresh_token);
           },
         });
       expect(authStore.startQuery).toHaveBeenCalledTimes(1);
       httpMock.expectOne('auth/token').flush(response);
+    }
+  ));
+
+  it('should sign out', inject(
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      const accessSpy = spyOnProperty(storageService, 'accessToken', 'set');
+      const refreshSpy = spyOnProperty(storageService, 'refreshToken', 'set');
+      spyOn(authStore, 'signOut');
+
+      authService.signOut();
+      expect(authStore.signOut).toHaveBeenCalledTimes(1);
+      expect(accessSpy).toHaveBeenCalledWith(null);
+      expect(refreshSpy).toHaveBeenCalledWith(null);
+      httpMock.expectOne('auth/logout').flush({});
     }
   ));
 });

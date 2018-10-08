@@ -20,4 +20,13 @@ export class AuthQuery extends Query<AuthState> {
   success$: Observable<boolean> = this.select(({ success }) =>
     toBoolean(success)
   ).pipe(skip(1));
+
+  loggedIn$: Observable<boolean> = this.select(
+    ({ accessToken, jwtPayload, refreshToken }) =>
+      toBoolean(accessToken && jwtPayload && refreshToken)
+  );
+
+  get accessToken(): string {
+    return this.getSnapshot().accessToken;
+  }
 }

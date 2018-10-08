@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+<nav *ngIf="loggedIn$ | async">
+  <mgg-nav></mgg-nav>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+</main>

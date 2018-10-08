@@ -6,9 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreRoutingModule } from './core-routing.module';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UrlInterceptor } from '@app/core/interceptors/url.interceptor';
+import { NavComponent } from './components/nav/nav.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { AuthorizationInterceptor } from '@app/auth/interceptors/authorization.interceptor';
 
 @NgModule({
-  declarations: [LandingPageComponent],
+  declarations: [LandingPageComponent, NavComponent, HomePageComponent],
+  exports: [NavComponent],
   imports: [
     BrowserAnimationsModule,
     CommonModule,
@@ -16,7 +20,13 @@ import { UrlInterceptor } from '@app/core/interceptors/url.interceptor';
     HttpClientModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UrlInterceptor, multi: true },
+    { multi: true, provide: HTTP_INTERCEPTORS, useClass: UrlInterceptor },
+    {
+      multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+    },
+    // TODO: Implement 401 retry interceptor
   ],
 })
 export class CoreModule {}
