@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
-    "test:coverage": "ng test --watch=false --code-coverage",
+    "test:cov": "ng test --watch=false --code-coverage",
+    "test:ci": "ng test --watch=false --progress=false --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
