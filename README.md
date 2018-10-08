@@ -1,5 +1,7 @@
 # Mugengo UI
 
+[![Build Status](https://travis-ci.com/dricholm/mugengo-ui.svg?branch=master)](https://travis-ci.com/dricholm/mugengo-ui)
+
 A webapp for learning new languages by talking to people from all over the world. Frontend part built using [Angular](https://angular.io/). The [backend](https://github.com/dricholm/mugengo-server) repo can also be found on GitHub.
 
 > Note: Under development, not yet released
