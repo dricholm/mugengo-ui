@@ -8,7 +8,8 @@
     "test": "ng test",
     "coverage": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ci": "ng lint && ng test --watch=false --progress=false --browsers=ChromeHeadlessCI --code-coverage && ng build --prod"
   },
   "private": true,
   "dependencies": {

@@ -16,10 +16,7 @@ addons:
       - google-chrome-stable
 
 script:
-  - npm run lint
-  - npm run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI --code-coverage
-  - npm run e2e
-  - npm run build
+  - npm run ci
 
 after_success:
   - cat coverage/lcov.info | coveralls
