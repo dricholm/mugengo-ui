@@ -17,11 +17,10 @@
     </div>
   </div>
 
-  <div class="text-center">
-    <button type="submit" class="btn btn-primary px-5" [disabled]="loading">
-      Sign In
-    </button>
-  </div>
+  <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+    <fa-icon *ngIf="loading" icon="circle-notch" [fixedWidth]="true" [spin]="true"></fa-icon>
+    Sign In
+  </button>
 </form>
 
 <div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @fade>

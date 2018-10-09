@@ -37,11 +37,10 @@
     </div>
   </div>
 
-  <div class="text-center">
-    <button type="submit" class="btn btn-primary px-5" [disabled]="loading || success">
-      Join
-    </button>
-  </div>
+  <button type="submit" class="btn btn-primary btn-block" [disabled]="loading || success">
+    <fa-icon *ngIf="loading" icon="circle-notch" [fixedWidth]="true" [spin]="true"></fa-icon>
+    Join
+  </button>
 </form>
 
 <div class="alert alert-success mt-3 mb-0" *ngIf="success" @fade>
