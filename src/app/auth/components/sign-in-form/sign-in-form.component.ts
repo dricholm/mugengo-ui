@@ -14,16 +14,8 @@ import { fadeInAnimation, fadeOutAnimation } from '@app/shared/animations';
 @Component({
   animations: [
     trigger('fade', [
-      transition(':enter', [
-        useAnimation(fadeInAnimation, {
-          params: { time: '800ms ease-in' },
-        }),
-      ]),
-      transition(':leave', [
-        useAnimation(fadeOutAnimation, {
-          params: { time: '800ms ease-out' },
-        }),
-      ]),
+      transition(':enter', [useAnimation(fadeInAnimation)]),
+      transition(':leave', [useAnimation(fadeOutAnimation)]),
     ]),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

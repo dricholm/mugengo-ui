@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthQuery, AuthService } from '@app/auth/state';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mgg-root',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html',

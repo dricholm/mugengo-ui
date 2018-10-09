@@ -55,4 +55,17 @@ describe('AuthStore', () => {
       success: true,
     });
   });
+
+  it('should reset authentication properties on sign out', () => {
+    spyOn(store, 'update');
+    store.signOut();
+    expect(store.update).toHaveBeenCalledWith({
+      accessToken: null,
+      error: null,
+      jwtPayload: null,
+      loading: false,
+      refreshToken: null,
+      success: false,
+    });
+  });
 });
