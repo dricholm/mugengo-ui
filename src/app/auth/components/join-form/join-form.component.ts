@@ -10,13 +10,13 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 
 import { confirmValidator } from '@app/shared/validators';
 import { JoinRequest } from '@app/auth/interfaces';
-import { fadeInAnimation, fadeOutAnimation } from '@app/shared/animations';
+import { expandAnimation, collapseAnimation } from '@app/shared/animations';
 
 @Component({
   animations: [
-    trigger('fade', [
-      transition(':enter', [useAnimation(fadeInAnimation)]),
-      transition(':leave', [useAnimation(fadeOutAnimation)]),
+    trigger('height', [
+      transition(':enter', [useAnimation(expandAnimation)]),
+      transition(':leave', [useAnimation(collapseAnimation)]),
     ]),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

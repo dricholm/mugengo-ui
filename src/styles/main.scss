@@ -13,3 +13,10 @@ body {
   border-left: none;
   border-right: none;
 }
+
+main {
+  router-outlet ~ * {
+    display: block;
+    min-height: 100%;
+  }
+}

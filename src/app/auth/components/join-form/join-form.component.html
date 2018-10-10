@@ -4,7 +4,7 @@
     <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
       [class.is-invalid]="this.submitClicked && this.joinForm.controls.name.errors" autofocus>
     <small id="nameHelp" class="form-text text-muted">This can be changed later.</small>
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.name.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.name.errors" @height>
       Please enter a name.
     </div>
   </div>
@@ -13,7 +13,7 @@
     <label for="email">Email address</label>
     <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your email address"
       [class.is-invalid]="this.submitClicked && this.joinForm.controls.email.errors">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.email.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.email.errors" @height>
       Please enter a valid email address.
     </div>
   </div>
@@ -23,7 +23,7 @@
     <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
       placeholder="Your password" [class.is-invalid]="this.submitClicked && this.joinForm.controls.password.errors">
     <small id="passwordHelp" class="form-text text-muted">Password must be at least 6 characters long.</small>
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.password.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.controls.password.errors" @height>
       Please enter a password with at least 6 characters.
     </div>
   </div>
@@ -32,7 +32,7 @@
     <label for="passwordConfirm">Confirm password</label>
     <input formControlName="passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="Your password again"
       [class.is-invalid]="this.submitClicked && this.joinForm.errors">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.joinForm.errors" @height>
       Please enter the same password here.
     </div>
   </div>
@@ -43,12 +43,12 @@
   </button>
 </form>
 
-<div class="alert alert-success mt-3 mb-0" *ngIf="success" @fade>
+<div class="alert alert-success mt-3 mb-0" *ngIf="success" @height>
   <h5 class="alert-heading">Success</h5>
   Thank you for joining Mugengo! You can now proceed to <a routerLink="/sign-in">sign in</a>.
 </div>
 
-<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @fade>
+<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @height>
   <ng-container *ngSwitchCase="400">
     <h5 class="alert-heading">Invalid data</h5>
     Please check the input fields again. If this error persists please contact us.

@@ -1,6 +1,6 @@
-<nav *ngIf="loggedIn$ | async">
+<nav *ngIf="loggedIn$ | async" @nav>
   <mgg-nav></mgg-nav>
 </nav>
-<main>
-  <router-outlet></router-outlet>
+<main [@router]="outlet.isActivated ? outlet.activatedRoute : ''">
+  <router-outlet #outlet="outlet"></router-outlet>
 </main>

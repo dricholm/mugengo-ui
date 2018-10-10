@@ -23,4 +23,7 @@ nav {
 
 main {
   grid-area: main;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 }

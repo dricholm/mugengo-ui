@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig, action } from '@datorama/akita';
 
-import { TokenResponse, JwtPayload } from '@app/auth/interfaces';
+import { JwtPayload } from '@app/auth/interfaces';
 
 export interface AuthState {
   accessToken: string;
