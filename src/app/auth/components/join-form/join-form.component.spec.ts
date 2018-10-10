@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { JoinFormComponent } from './join-form.component';
 import { JoinRequest } from '@app/auth/interfaces';
@@ -13,6 +14,7 @@ describe('JoinFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [JoinFormComponent],
       imports: [NoopAnimationsModule, ReactiveFormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 

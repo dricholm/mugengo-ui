@@ -3,7 +3,7 @@
     <label for="email">Email address</label>
     <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your email address"
       [class.is-invalid]="this.submitClicked && this.signInForm.controls.email.errors" autofocus>
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.email.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.email.errors" @height>
       Please enter a valid email address.
     </div>
   </div>
@@ -12,19 +12,18 @@
     <label for="password">Password</label>
     <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp"
       placeholder="Your password" [class.is-invalid]="this.submitClicked && this.signInForm.controls.password.errors">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.password.errors" @fade>
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.signInForm.controls.password.errors" @height>
       Please enter at least 6 characters.
     </div>
   </div>
 
-  <div class="text-center">
-    <button type="submit" class="btn btn-primary px-5" [disabled]="loading">
-      Sign In
-    </button>
-  </div>
+  <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+    <fa-icon *ngIf="loading" icon="circle-notch" [fixedWidth]="true" [spin]="true"></fa-icon>
+    Sign In
+  </button>
 </form>
 
-<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @fade>
+<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @height>
   <ng-container *ngSwitchCase="400">
     <h5 class="alert-heading">Sign In failed</h5>
     Please check your email and password.
