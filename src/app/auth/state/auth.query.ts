@@ -15,7 +15,18 @@ export class AuthQuery extends Query<AuthState> {
       toBoolean(accessToken && jwtPayload && refreshToken)
   );
 
+  get loggedIn(): boolean {
+    const snapshot: AuthState = this.getSnapshot();
+    return toBoolean(
+      snapshot.accessToken && snapshot.jwtPayload && snapshot.refreshToken
+    );
+  }
+
   get accessToken(): string {
     return this.getSnapshot().accessToken;
+  }
+
+  get refreshToken(): string {
+    return this.getSnapshot().refreshToken;
   }
 }

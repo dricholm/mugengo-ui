@@ -9,6 +9,11 @@ const routes: Routes = [
     loadChildren: '@app/settings/settings.module#SettingsModule',
     path: 'settings',
   },
+  {
+    canActivate: [AuthGuard],
+    loadChildren: '@app/users/users.module#UsersModule',
+    path: 'users',
+  },
 ];
 
 @NgModule({

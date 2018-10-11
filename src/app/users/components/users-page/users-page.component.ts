@@ -1,15 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'mgg-users-page',
   templateUrl: './users-page.component.html',
-  styleUrls: ['./users-page.component.scss']
 })
-export class UsersPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class UsersPageComponent {}

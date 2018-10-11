@@ -43,6 +43,10 @@
     <h5 class="alert-heading">Invalid data</h5>
     Please check the input fields again. If this error persists please contact us.
   </ng-container>
+  <ng-container *ngSwitchCase="401">
+    <h5 class="alert-heading">Unauthorized</h5>
+    You are unauthorized.
+  </ng-container>
   <ng-container *ngSwitchCase="500">
     <h5 class="alert-heading">Server error</h5>
     Please try again later. If this error persists please contact us.
