@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { skip } from 'rxjs/operators';
 
 import { AuthQuery, AuthService } from '@app/auth/state';
 import { SignInForm } from '@app/auth/interfaces';
@@ -16,8 +17,8 @@ export class SignInPageComponent {
     private router: Router
   ) {}
 
-  error$ = this.authQuery.error$;
-  loading$ = this.authQuery.loading$;
+  error$ = this.authQuery.select(({ error }) => error).pipe(skip(1));
+  loading$ = this.authQuery.select(({ loading }) => loading);
 
   onSubmit(data: SignInForm) {
     this.authService
