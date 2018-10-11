@@ -1,0 +1,55 @@
+.nav {
+  background-color: $white;
+  border-bottom: 1px solid map-get($grays, '400');
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    flex: 1 1 auto;
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+      flex: initial;
+    }
+
+    a {
+      color: map-get($grays, '700');
+      display: block;
+      padding: map-get($spacers, 3) 0;
+      position: relative;
+      transition: color 150ms $standard-easing;
+
+      @include hover-focus() {
+        color: $primary;
+        text-decoration: none;
+      }
+
+      @include media-breakpoint-up(md) {
+        padding: map-get($spacers, 3);
+      }
+
+      &::after {
+        bottom: 0;
+        content: '';
+        background-color: $primary;
+        border-radius: $border-radius;
+        height: 4px;
+        left: 0;
+        position: absolute;
+        transform: scaleX(0);
+        transition: transform 150ms $standard-easing;
+        width: 100%;
+      }
+
+      &.active {
+        color: $primary;
+
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+}

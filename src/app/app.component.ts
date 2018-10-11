@@ -4,7 +4,6 @@ import {
   transition,
   useAnimation,
   query,
-  style,
   group,
 } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -14,9 +13,7 @@ import {
   expandAnimation,
   collapseAnimation,
   fadeInAnimation,
-  fadeOutAnimation,
   scaleUpAnimation,
-  scaleDownAnimation,
 } from './shared/animations';
 
 @Component({
@@ -31,28 +28,6 @@ import {
     ]),
     trigger('router', [
       transition('* => *', [
-        query(
-          ':enter, :leave',
-          style({
-            left: 0,
-            'min-height': '100%',
-            position: 'absolute',
-            top: 0,
-            width: '100%',
-          }),
-          { optional: true }
-        ),
-        query(':enter', style({ opacity: 0 }), { optional: true }),
-        query(
-          ':leave',
-          group([
-            useAnimation(fadeOutAnimation, { params: { time: '250ms' } }),
-            useAnimation(scaleDownAnimation, {
-              params: { time: '250ms', to: 0.95 },
-            }),
-          ]),
-          { optional: true }
-        ),
         query(
           ':enter',
           group([

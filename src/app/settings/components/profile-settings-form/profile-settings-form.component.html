@@ -1,0 +1,54 @@
+<form [formGroup]="profileForm" (submit)="onSubmit($event)">
+
+  <div class="form-group">
+    <label for="name">Display name</label>
+    <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
+      [class.is-invalid]="this.submitClicked && this.profileForm.controls.name.errors" [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.controls.name.errors" @height>
+      Please enter a name.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="country">Country</label>
+    <select class="custom-select" formControlName="country" id="country" [attr.disabled]="formDisabled">
+      <option selected value=""></option>
+      <option *ngFor="let country of countries" [attr.value]="country.code">{{ country.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input formControlName="age" type="number" class="form-control" id="age" aria-describedby="ageHelp" placeholder="Your age"
+      [class.is-invalid]="this.submitClicked && this.profileForm.controls.age.errors" style="max-width: 7rem"
+      [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.controls.age.errors" @height>
+      Please enter your age.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block" [disabled]="formDisabled">
+    <fa-icon *ngIf="loading" icon="circle-notch" [fixedWidth]="true" [spin]="true"></fa-icon>
+    Save profile
+  </button>
+</form>
+
+<div class="alert alert-success mt-3 mb-0" *ngIf="success" @height>
+  <h5 class="alert-heading">Success</h5>
+  Profile saved.
+</div>
+
+<div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @height>
+  <ng-container *ngSwitchCase="400">
+    <h5 class="alert-heading">Invalid data</h5>
+    Please check the input fields again. If this error persists please contact us.
+  </ng-container>
+  <ng-container *ngSwitchCase="500">
+    <h5 class="alert-heading">Server error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <h5 class="alert-heading">Unknown error</h5>
+    Please try again later. If this error persists please contact us.
+  </ng-container>
+</div>
