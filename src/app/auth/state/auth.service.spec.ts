@@ -175,6 +175,40 @@ describe('AuthService', () => {
     }
   ));
 
+  it('should set error in sign in', inject(
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      const accessSpy = spyOnProperty(storageService, 'accessToken', 'set');
+      const refreshSpy = spyOnProperty(storageService, 'refreshToken', 'set');
+      spyOn(authStore, 'startQuery');
+      spyOn(authStore, 'error');
+      spyOn(authStore, 'token');
+
+      authService
+        .token$({
+          email: 'user@mugengo.com',
+          grant_type: 'password',
+          password: 'password',
+        })
+        .subscribe({
+          complete: () => {
+            expect(authStore.error).toHaveBeenCalledWith(400);
+            expect(authStore.token).toHaveBeenCalledTimes(0);
+            expect(accessSpy).toHaveBeenCalledTimes(0);
+            expect(refreshSpy).toHaveBeenCalledTimes(0);
+          },
+        });
+      expect(authStore.startQuery).toHaveBeenCalledTimes(1);
+      httpMock
+        .expectOne('auth/token')
+        .error(new ErrorEvent('Error'), { status: 400 });
+    }
+  ));
+
   it('should sign out', inject(
     [AuthService, AuthStore, StorageService],
     (
@@ -191,6 +225,27 @@ describe('AuthService', () => {
       expect(accessSpy).toHaveBeenCalledWith(null);
       expect(refreshSpy).toHaveBeenCalledWith(null);
       httpMock.expectOne('auth/logout').flush({});
+    }
+  ));
+
+  it('should sign out even in case of error', inject(
+    [AuthService, AuthStore, StorageService],
+    (
+      authService: AuthService,
+      authStore: AuthStore,
+      storageService: StorageService
+    ) => {
+      const accessSpy = spyOnProperty(storageService, 'accessToken', 'set');
+      const refreshSpy = spyOnProperty(storageService, 'refreshToken', 'set');
+      spyOn(authStore, 'signOut');
+
+      authService.signOut();
+      expect(authStore.signOut).toHaveBeenCalledTimes(1);
+      expect(accessSpy).toHaveBeenCalledWith(null);
+      expect(refreshSpy).toHaveBeenCalledWith(null);
+      httpMock
+        .expectOne('auth/logout')
+        .error(new ErrorEvent('Error'), { status: 500 });
     }
   ));
 });
