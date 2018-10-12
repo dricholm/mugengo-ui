@@ -1,30 +1,40 @@
 <form [formGroup]="profileForm" (submit)="onSubmit($event)">
 
   <div class="form-group">
-    <label for="name">Display name</label>
+    <label for="name">
+      Display name
+    </label>
     <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
-      [class.is-invalid]="this.submitClicked && this.profileForm.controls.name.errors" [attr.disabled]="formDisabled">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.controls.name.errors" @height>
+      [class.is-invalid]="this.submitClicked && this.profileForm.get('name').errors" [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.get('name').errors" @height>
       Please enter a name.
     </div>
   </div>
 
   <div class="form-group">
-    <label for="country">Country</label>
-    <select class="custom-select" formControlName="country" id="country" [attr.disabled]="formDisabled">
-      <option selected value=""></option>
-      <option *ngFor="let country of countries" [attr.value]="country.code">{{ country.name }}</option>
-    </select>
+    <label for="age">
+      Age
+      <span class="text-muted">(optional)</span>
+    </label>
+    <input formControlName="age" type="number" class="form-control" id="age" aria-describedby="ageHelp" placeholder="Your age"
+      [class.is-invalid]="this.submitClicked && this.profileForm.get('age').errors" style="max-width: 7rem"
+      [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.get('age').errors" @height>
+      Please enter your age as a positive number.
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="age">Age</label>
-    <input formControlName="age" type="number" class="form-control" id="age" aria-describedby="ageHelp" placeholder="Your age"
-      [class.is-invalid]="this.submitClicked && this.profileForm.controls.age.errors" style="max-width: 7rem"
-      [attr.disabled]="formDisabled">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.controls.age.errors" @height>
-      Please enter your age.
-    </div>
+    <label for="country">
+      Country
+      <span class="text-muted">(optional)</span>
+    </label>
+    <select class="custom-select" formControlName="country" id="country" [attr.disabled]="formDisabled">
+      <option selected value=""></option>
+      <option *ngFor="let country of countries" [value]="country.code">
+        {{ country.name }}
+      </option>
+    </select>
   </div>
 
   <button type="submit" class="btn btn-primary btn-block" [disabled]="formDisabled">

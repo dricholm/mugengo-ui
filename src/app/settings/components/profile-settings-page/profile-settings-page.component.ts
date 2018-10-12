@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 import { Profile } from '@app/settings/interfaces';
-import { Country } from '@app/core/interfaces/country.interface';
+import { Country } from '@app/core/interfaces';
 import { CountryService } from '@app/core/services/country.service';
 import { SettingsQuery, SettingsService } from '@app/settings/state';
 

@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { trigger, transition, useAnimation } from '@angular/animations';
 
 import { expandAnimation, collapseAnimation } from '@app/shared/animations';
-import { Country } from '@app/core/interfaces/country.interface';
+import { Country } from '@app/core/interfaces';
 import { Profile } from '@app/settings/interfaces';
 
 @Component({
@@ -23,7 +23,6 @@ import { Profile } from '@app/settings/interfaces';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mgg-profile-settings-form',
-  styleUrls: ['./profile-settings-form.component.scss'],
   templateUrl: './profile-settings-form.component.html',
 })
 export class ProfileSettingsFormComponent implements OnChanges {

@@ -7,6 +7,7 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 import { SettingsNavComponent } from './components/settings-nav/settings-nav.component';
 import { ProfileSettingsPageComponent } from './components/profile-settings-page/profile-settings-page.component';
 import { ProfileSettingsFormComponent } from './components/profile-settings-form/profile-settings-form.component';
+import { LanguageSettingsPageComponent } from './components/language-settings-page/language-settings-page.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ProfileSettingsFormComponent } from './components/profile-settings-form
     SettingsNavComponent,
     ProfileSettingsPageComponent,
     ProfileSettingsFormComponent,
+    LanguageSettingsPageComponent,
   ],
   imports: [CommonModule, SettingsRoutingModule, SharedModule],
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Country } from '@app/core/interfaces/country.interface';
+import { Country } from '@app/core/interfaces';
 
 @Injectable({
   providedIn: 'root',
