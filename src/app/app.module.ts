@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -17,6 +19,8 @@ import { AuthModule } from '@app/auth/auth.module';
     AuthModule,
     CoreModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
+    TooltipModule.forRoot(),
+    TypeaheadModule.forRoot(),
   ],
   providers: [],
 })

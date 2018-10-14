@@ -44,7 +44,7 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.authStore.error(error.status);
-        return of();
+        return of(null);
       })
     );
   }
@@ -65,7 +65,7 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.authStore.error(error.status);
-        return of();
+        return of(null);
       })
     );
   }
@@ -75,7 +75,6 @@ export class AuthService {
       .signOut$({ refreshToken: this.storageService.refreshToken })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.error('Error during Sign Out request', error);
           return of(null);
         })
       )

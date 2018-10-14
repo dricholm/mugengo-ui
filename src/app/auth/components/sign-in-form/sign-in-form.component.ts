@@ -25,7 +25,6 @@ import { expandAnimation, collapseAnimation } from '@app/shared/animations';
 export class SignInFormComponent {
   @Input()
   error: number;
-  // TODO: Add loading spinner
   @Input()
   loading: boolean;
   @Output()

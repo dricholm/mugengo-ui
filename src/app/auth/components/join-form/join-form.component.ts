@@ -26,7 +26,6 @@ import { expandAnimation, collapseAnimation } from '@app/shared/animations';
 export class JoinFormComponent {
   @Input()
   error: number;
-  // TODO: Add loading spinner
   @Input()
   loading: boolean;
   @Input()

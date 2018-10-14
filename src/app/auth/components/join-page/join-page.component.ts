@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { JoinRequest } from '@app/auth/interfaces';
 import { AuthQuery, AuthService } from '@app/auth/state';
+import { skip } from 'rxjs/operators';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,9 +12,9 @@ import { AuthQuery, AuthService } from '@app/auth/state';
 export class JoinPageComponent {
   constructor(private authQuery: AuthQuery, private authService: AuthService) {}
 
-  error$ = this.authQuery.error$;
-  loading$ = this.authQuery.loading$;
-  success$ = this.authQuery.success$;
+  error$ = this.authQuery.select(({ error }) => error).pipe(skip(1));
+  loading$ = this.authQuery.select(({ loading }) => loading);
+  success$ = this.authQuery.select(({ success }) => success).pipe(skip(1));
 
   onSubmit(data: JoinRequest) {
     this.authService.join$(data).subscribe();

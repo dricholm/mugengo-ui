@@ -1,0 +1,4 @@
+<span class="badge badge-info" *ngFor="let language of languages; let i = index" [tooltip]="getName(i)">
+  {{ language.code }}
+  {{ language.level }}
+</span>

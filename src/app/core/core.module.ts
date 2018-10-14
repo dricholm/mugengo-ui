@@ -11,9 +11,15 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { AuthorizationInterceptor } from '@app/auth/interceptors/authorization.interceptor';
 import { SharedModule } from '@app/shared/shared.module';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { UnauthorizedInterceptor } from '@app/auth/interceptors/unauthorized.interceptor';
 
 @NgModule({
-  declarations: [LandingPageComponent, NavComponent, HomePageComponent, NotFoundPageComponent],
+  declarations: [
+    LandingPageComponent,
+    NavComponent,
+    HomePageComponent,
+    NotFoundPageComponent,
+  ],
   exports: [NavComponent],
   imports: [
     BrowserAnimationsModule,
@@ -29,7 +35,11 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,
     },
-    // TODO: Implement 401 retry interceptor
+    {
+      multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+    },
   ],
 })
 export class CoreModule {}
