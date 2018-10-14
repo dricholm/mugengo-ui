@@ -3,8 +3,12 @@ import { Observable } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 import { Profile } from '@app/settings/interfaces';
-import { Country } from '@app/core/interfaces';
-import { CountryService } from '@app/core/services/country.service';
+import {
+  CountryQuery,
+  Country,
+  LanguageQuery,
+  Language,
+} from '@app/core/state';
 import { SettingsQuery, SettingsService } from '@app/settings/state';
 
 @Component({
@@ -14,12 +18,18 @@ import { SettingsQuery, SettingsService } from '@app/settings/state';
 })
 export class ProfileSettingsPageComponent implements OnInit {
   constructor(
-    private countryService: CountryService,
+    private countryQuery: CountryQuery,
+    private languageService: LanguageQuery,
     private settingsQuery: SettingsQuery,
     private settingsService: SettingsService
   ) {}
 
-  countries: Array<Country> = this.countryService.countries;
+  countries$: Observable<Array<Country>> = this.countryQuery.selectAll({
+    sortBy: 'name',
+  });
+  languages$: Observable<Array<Language>> = this.languageService.selectAll({
+    sortBy: 'name',
+  });
 
   success$: Observable<boolean> = this.settingsQuery
     .select(state => state.success)

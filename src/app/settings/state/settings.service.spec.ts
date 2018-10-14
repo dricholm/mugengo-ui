@@ -30,7 +30,12 @@ describe('SettingsService', () => {
       spyOn(store, 'setLoading');
       spyOn(store, 'error');
 
-      const data: Profile = { age: 12, country: 'test', name: 'Name' };
+      const data: Profile = {
+        age: 12,
+        country: 'test',
+        languages: [],
+        name: 'Name',
+      };
 
       service.getProfile$().subscribe({
         complete: () => {
@@ -71,15 +76,22 @@ describe('SettingsService', () => {
     [SettingsService, SettingsStore],
     (service: SettingsService, store: SettingsStore) => {
       spyOn(store, 'startQuery');
+      spyOn(store, 'setProfile');
       spyOn(store, 'success');
       spyOn(store, 'error');
 
-      const data: Profile = { age: 12, country: 'test', name: 'Name' };
+      const data: Profile = {
+        age: 12,
+        country: 'test',
+        languages: [],
+        name: 'Name',
+      };
 
       service.updateProfile$(data).subscribe({
         complete: () => {
           expect(store.success).toHaveBeenCalledTimes(1);
           expect(store.error).toHaveBeenCalledTimes(0);
+          expect(store.setProfile).toHaveBeenCalledWith(data);
         },
       });
       expect(store.startQuery).toHaveBeenCalledTimes(1);
@@ -91,15 +103,22 @@ describe('SettingsService', () => {
     [SettingsService, SettingsStore],
     (service: SettingsService, store: SettingsStore) => {
       spyOn(store, 'startQuery');
+      spyOn(store, 'setProfile');
       spyOn(store, 'success');
       spyOn(store, 'error');
 
-      const data: Profile = { age: 12, country: 'test', name: 'Name' };
+      const data: Profile = {
+        age: 12,
+        country: 'test',
+        languages: [],
+        name: 'Name',
+      };
 
       service.updateProfile$(data).subscribe({
         complete: () => {
           expect(store.success).toHaveBeenCalledTimes(0);
           expect(store.error).toHaveBeenCalledWith(500);
+          expect(store.setProfile).toHaveBeenCalledTimes(0);
         },
       });
       expect(store.startQuery).toHaveBeenCalledTimes(1);

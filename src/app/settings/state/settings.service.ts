@@ -34,6 +34,7 @@ export class SettingsService {
     this.settingsStore.startQuery();
     return this.settingsDataService.updateProfile$(data).pipe(
       map(() => {
+        this.settingsStore.setProfile(data);
         this.settingsStore.success();
         return null;
       }),

@@ -4,9 +4,9 @@
     <label for="name">
       Display name
     </label>
-    <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Your display name"
-      [class.is-invalid]="this.submitClicked && this.profileForm.get('name').errors" [attr.disabled]="formDisabled">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.get('name').errors" @height>
+    <input formControlName="name" type="text" class="form-control" id="name" placeholder="Your display name"
+      [class.is-invalid]="submitClicked && profileForm.get('name').errors" [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('name').errors" @height>
       Please enter a name.
     </div>
   </div>
@@ -16,10 +16,9 @@
       Age
       <span class="text-muted">(optional)</span>
     </label>
-    <input formControlName="age" type="number" class="form-control" id="age" aria-describedby="ageHelp" placeholder="Your age"
-      [class.is-invalid]="this.submitClicked && this.profileForm.get('age').errors" style="max-width: 7rem"
-      [attr.disabled]="formDisabled">
-    <div class="invalid-feedback" *ngIf="this.submitClicked && this.profileForm.get('age').errors" @height>
+    <input formControlName="age" type="number" class="form-control" id="age" placeholder="Your age" [class.is-invalid]="submitClicked && profileForm.get('age').errors"
+      style="max-width: 7rem" [attr.disabled]="formDisabled">
+    <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('age').errors" @height>
       Please enter your age as a positive number.
     </div>
   </div>
@@ -29,12 +28,80 @@
       Country
       <span class="text-muted">(optional)</span>
     </label>
-    <select class="custom-select" formControlName="country" id="country" [attr.disabled]="formDisabled">
-      <option selected value=""></option>
-      <option *ngFor="let country of countries" [value]="country.code">
-        {{ country.name }}
-      </option>
-    </select>
+    <input formControlName="country" type="text" class="form-control" id="country" placeholder="Start typing a country name"
+      [class.is-invalid]="submitClicked && profileForm.get('country').errors" [attr.disabled]="formDisabled"
+      [typeahead]="countries" typeaheadOptionField="name">
+    <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('country').errors" @height>
+      Please select a country from the list.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>
+      Languages
+      <span class="text-muted">(optional)</span>
+    </label>
+
+    <fieldset formArrayName="languages">
+
+      <fieldset class="form-group language-form" *ngFor="let language of languagesForm.controls; let i = index"
+        [formGroupName]="i" @height>
+        <div class="d-flex align-items-center justify-content-between">
+          <mgg-language-icons [languages]="[languagesForm.at(i).value]"></mgg-language-icons>
+          <button class="btn btn-outline-danger btn-sm" type="button" (click)="removeLanguage(i)">
+            <fa-icon icon="minus" [fixedWidth]="true"></fa-icon>
+            Remove
+          </button>
+        </div>
+        <input type="hidden" formControlName="code">
+
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="'languages-' + i + '-1'" formControlName="level" class="custom-control-input"
+            [value]="1">
+          <label class="custom-control-label" [for]="'languages-' + i + '-1'">Beginner</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="'languages-' + i + '-2'" formControlName="level" class="custom-control-input"
+            [value]="2">
+          <label class="custom-control-label" [for]="'languages-' + i + '-2'">Intermediate</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="'languages-' + i + '-3'" formControlName="level" class="custom-control-input"
+            [value]="3">
+          <label class="custom-control-label" [for]="'languages-' + i + '-3'">Advanced</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="'languages-' + i + '-4'" formControlName="level" class="custom-control-input"
+            [value]="4">
+          <label class="custom-control-label" [for]="'languages-' + i + '-4'">Fluent</label>
+        </div>
+      </fieldset>
+
+    </fieldset>
+    <div class="d-flex align-items-start">
+      <div class="mr-2 flex-grow-1">
+        <input formControlName="language" type="text" class="form-control" id="language" placeholder="Start typing a language"
+          [class.is-invalid]="languageError" [attr.disabled]="formDisabled" [typeahead]="languages"
+          typeaheadOptionField="name" #languageSelect>
+        <div class="invalid-feedback" *ngIf="languageError" [ngSwitch]="languageError" @height>
+          <ng-container *ngSwitchCase="'notFound'">
+            Please select a language from the list.
+          </ng-container>
+          <ng-container *ngSwitchCase="'exists'">
+            This language is already in your list.
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            Error adding language.
+          </ng-container>
+        </div>
+      </div>
+
+      <button class="btn btn-outline-secondary" type="button" id="addLanguage" (click)="addLanguage(languageSelect.value)"
+        [disabled]="formDisabled">
+        <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+        Add
+      </button>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary btn-block" [disabled]="formDisabled">

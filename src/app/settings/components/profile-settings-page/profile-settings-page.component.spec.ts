@@ -47,7 +47,8 @@ describe('ProfileSettingsPageComponent', () => {
       spyOn(service, 'updateProfile$').and.callThrough();
       const data: Profile = {
         age: 11,
-        country: 'test',
+        country: 'ts',
+        languages: [],
         name: 'username',
       };
       component.onSubmit(data);

@@ -26,7 +26,12 @@ describe('SettingsDataService', () => {
   });
 
   it('should get profile info', async () => {
-    const data: Profile = { age: 22, country: 'test', name: 'User name' };
+    const data: Profile = {
+      age: 22,
+      country: 'ts',
+      languages: [{ code: 'lc', level: 1 }],
+      name: 'User name',
+    };
 
     service.getProfile$().subscribe((profile: Profile) => {
       expect(profile).toBe(data);
@@ -37,7 +42,12 @@ describe('SettingsDataService', () => {
   });
 
   it('should update profile info', async () => {
-    const data: Profile = { age: 22, country: 'test', name: 'User name' };
+    const data: Profile = {
+      age: 22,
+      country: 'test',
+      languages: [{ code: 'lc', level: 2 }],
+      name: 'User name',
+    };
 
     service.updateProfile$(data).subscribe();
     const req = httpMock.expectOne('settings/profile');

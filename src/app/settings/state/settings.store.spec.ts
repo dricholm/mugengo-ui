@@ -43,6 +43,7 @@ describe('SettingsStore', () => {
     const profile: Profile = {
       age: 23,
       country: 'test',
+      languages: [],
       name: 'user',
     };
     store.setProfile(profile);
