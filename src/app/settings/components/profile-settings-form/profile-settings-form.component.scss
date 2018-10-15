@@ -1,21 +1,37 @@
 @import '~styles/declarations';
 
-.language-form {
-  border-left: 4px solid map-get($grays, '400');
-  border-radius: $border-radius;
-  padding: map-get($spacers, 2) map-get($spacers, 0) map-get($spacers, 2)
-    map-get($spacers, 3);
-  transition: border-color 200ms $standard-easing;
+.language-forms {
+  display: grid;
+  gap: map-get($spacers, 2) map-get($spacers, 3);
+  /* autoprefixer: off */
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr;
+  margin-bottom: map-get($spacers, 2);
 
-  @include hover-focus {
-    border-color: $primary;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .custom-radio:not(:last-child) {
-    margin-bottom: map-get($spacers, 2);
+  .language-form {
+    border-left: 4px solid map-get($grays, '400');
+    border-radius: $border-radius;
+    padding: map-get($spacers, 2) map-get($spacers, 0) map-get($spacers, 2)
+      map-get($spacers, 3);
+    transition: border-color 200ms $standard-easing;
 
-    @include media-breakpoint-up(md) {
-      margin-bottom: 0;
+    @include hover-focus {
+      border-color: $primary;
+    }
+
+    .custom-radio:not(:last-child) {
+      margin-bottom: map-get($spacers, 2);
+
+      @include media-breakpoint-up(md) {
+        margin-bottom: 0;
+      }
     }
   }
 }
