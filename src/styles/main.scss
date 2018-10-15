@@ -21,4 +21,20 @@ main {
   }
 }
 
+.submit-container {
+  button {
+    display: block;
+    width: 100%;
+  }
+
+  @include media-breakpoint-up(md) {
+    text-align: center;
+
+    button {
+      display: initial;
+      width: initial;
+    }
+  }
+}
+
 @import '~styles/nav';

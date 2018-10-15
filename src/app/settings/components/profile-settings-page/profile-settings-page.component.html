@@ -1,16 +1,10 @@
-<div class="row justify-content-center">
-  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-5">
+<div class="card my-4">
+  <div class="card-body">
+    <h4 class="card-title">
+      Profile settings
+    </h4>
 
-    <div class="card my-4">
-      <div class="card-body">
-        <h4 class="card-title">
-          Profile settings
-        </h4>
-
-        <mgg-profile-settings-form [countries]="countries$ | async" [languages]="languages$ | async" [loading]="loading$ | async"
-          [success]="success$ | async" [error]="error$ | async" [profile]="profile$ | async" (submit)="onSubmit($event)"></mgg-profile-settings-form>
-      </div>
-    </div>
-
+    <mgg-profile-settings-form [countries]="countries$ | async" [languages]="languages$ | async" [loading]="loading$ | async"
+      [success]="success$ | async" [error]="error$ | async" [profile]="profile$ | async" (submit)="onSubmit($event)"></mgg-profile-settings-form>
   </div>
 </div>

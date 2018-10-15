@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   trigger,
   transition,
@@ -26,6 +26,7 @@ import { fadeInAnimation, scaleUpAnimation } from '@app/shared/animations';
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mgg-settings-page',
   templateUrl: './settings-page.component.html',
 })
