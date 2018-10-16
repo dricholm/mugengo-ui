@@ -49,66 +49,7 @@
     </label>
 
     <div class="col-12 col-md-9">
-      <div formArrayName="languages" class="language-forms">
-
-        <fieldset class="language-form" *ngFor="let language of languagesForm.controls; let i = index"
-          [formGroupName]="i" @height>
-          <div class="d-flex align-items-center justify-content-between">
-            <mgg-language-icons [languages]="[languagesForm.at(i).value]"></mgg-language-icons>
-            <button class="btn btn-outline-danger btn-sm" type="button" (click)="removeLanguage(i)">
-              <fa-icon icon="minus" [fixedWidth]="true"></fa-icon>
-              Remove
-            </button>
-          </div>
-          <input type="hidden" formControlName="code">
-
-          <div class="custom-control custom-radio">
-            <input type="radio" [id]="'languages-' + i + '-1'" formControlName="level" class="custom-control-input"
-              [value]="1">
-            <label class="custom-control-label" [for]="'languages-' + i + '-1'">Beginner</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" [id]="'languages-' + i + '-2'" formControlName="level" class="custom-control-input"
-              [value]="2">
-            <label class="custom-control-label" [for]="'languages-' + i + '-2'">Intermediate</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" [id]="'languages-' + i + '-3'" formControlName="level" class="custom-control-input"
-              [value]="3">
-            <label class="custom-control-label" [for]="'languages-' + i + '-3'">Advanced</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" [id]="'languages-' + i + '-4'" formControlName="level" class="custom-control-input"
-              [value]="4">
-            <label class="custom-control-label" [for]="'languages-' + i + '-4'">Fluent</label>
-          </div>
-        </fieldset>
-
-      </div>
-      <div class="d-flex align-items-start">
-        <div class="mr-2 flex-grow-1 flex-md-grow-0">
-          <input formControlName="language" type="text" class="form-control" id="language" placeholder="Start typing a language"
-            [class.is-invalid]="languageError" [attr.disabled]="formDisabled" [typeahead]="languages"
-            typeaheadOptionField="name" #languageSelect>
-          <div class="invalid-feedback" *ngIf="languageError" [ngSwitch]="languageError" @height>
-            <ng-container *ngSwitchCase="'notFound'">
-              Please select a language from the list.
-            </ng-container>
-            <ng-container *ngSwitchCase="'exists'">
-              This language is already in your list.
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              Error adding language.
-            </ng-container>
-          </div>
-        </div>
-
-        <button class="btn btn-outline-secondary" type="button" id="addLanguage" (click)="addLanguage(languageSelect.value)"
-          [disabled]="formDisabled">
-          <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
-          Add
-        </button>
-      </div>
+      <mgg-language-selector [form]="profileForm.get('language')" [languages]="languages" [formDisabled]="formDisabled"></mgg-language-selector>
     </div>
   </div>
 

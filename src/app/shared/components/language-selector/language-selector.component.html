@@ -1,0 +1,71 @@
+<div [formGroup]="form">
+  <div class="language-forms" formArrayName="languages">
+    <div class="language-form" *ngFor="let language of array.controls; let i = index" [formGroupName]="i" @height>
+
+      <mgg-language-icons [languages]="[array.value[i]]" class="grid-icon"></mgg-language-icons>
+      <button class="btn btn-outline-danger btn-sm grid-button" type="button" (click)="onRemove(i)">
+        <fa-icon icon="minus" [fixedWidth]="true"></fa-icon>
+        Remove
+      </button>
+      <input type="hidden" formControlName="code">
+
+      <div class="grid-level">
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('level', i, 1)" formControlName="level" class="custom-control-input" [value]="1"
+            [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('level', i, 1)">Beginner</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('level', i, 2)" formControlName="level" class="custom-control-input" [value]="2"
+            [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('level', i, 2)">Intermediate</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('level', i, 3)" formControlName="level" class="custom-control-input" [value]="3"
+            [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('level', i, 3)">Advanced</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('level', i, 4)" formControlName="level" class="custom-control-input" [value]="4"
+            [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('level', i, 4)">Fluent</label>
+        </div>
+      </div>
+
+      <div *ngIf="search" class="grid-search">
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('search', i, 1)" formControlName="search" class="custom-control-input"
+            [value]="1" [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('search', i, 1)">exactly</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="getId('search', i, 2)" formControlName="search" class="custom-control-input"
+            [value]="2" [attr.disabled]="formDisabled">
+          <label class="custom-control-label" [for]="getId('search', i, 2)">at least</label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="d-flex align-items-start">
+    <div class="mr-2 flex-grow-1 flex-md-grow-0">
+      <input formControlName="name" type="text" class="form-control" id="languageName" placeholder="Start typing a language"
+        [class.is-invalid]="this.form.get('name').errors" [attr.disabled]="formDisabled" [typeahead]="languages"
+        typeaheadOptionField="name">
+      <div class="invalid-feedback" *ngIf="this.form.get('name').errors" @height>
+        <ng-container *ngIf="this.form.get('name').hasError('notFound')">
+          Please select a language from the list.
+        </ng-container>
+        <ng-container *ngIf="this.form.get('name').hasError('exists')">
+          This language is already in your list.
+        </ng-container>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-secondary" type="button" id="addLanguage" (click)="onAdd()" [disabled]="formDisabled">
+      <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+      Add
+    </button>
+  </div>
+</div>
