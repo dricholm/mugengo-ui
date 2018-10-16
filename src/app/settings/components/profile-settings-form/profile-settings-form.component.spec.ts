@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
@@ -30,7 +30,6 @@ describe('ProfileSettingsFormComponent', () => {
 
   it('should emit submit', () => {
     component.countries = [{ code: 'ts', name: 'Test' }];
-    component.languages = [{ code: 'lc', name: 'Language test' }];
     component.profile = { age: null, country: '', languages: [], name: 'User' };
     fixture.detectChanges();
     component.ngOnChanges({
@@ -59,9 +58,12 @@ describe('ProfileSettingsFormComponent', () => {
     inputs[1].dispatchEvent(new Event('input'));
     inputs[2].value = 'Test';
     inputs[2].dispatchEvent(new Event('input'));
-    inputs[3].value = 'Language test';
-    inputs[3].dispatchEvent(new Event('input'));
-    fixture.nativeElement.querySelector('button[type="button"]').click();
+    component.languagesFormArray.push(
+      new FormGroup({
+        code: new FormControl('lc'),
+        level: new FormControl(1),
+      })
+    );
     submitButton.click();
     expect(component.submit.emit).toHaveBeenCalledWith(formData);
   });
@@ -84,81 +86,26 @@ describe('ProfileSettingsFormComponent', () => {
     expect(component.profileForm.get('country').value).toBe('Country');
   });
 
-  it('should not add language if incorrect', () => {
-    component.languages = [{ code: 'lc', name: 'Language test' }];
-    component.profile = { age: null, country: '', languages: [], name: 'User' };
-    fixture.detectChanges();
-    component.ngOnChanges({
-      languages: new SimpleChange(null, component.languages, true),
-      profile: new SimpleChange(null, component.profile, true),
-    });
-
-    const input: HTMLInputElement = fixture.nativeElement.querySelector(
-      'input#language'
-    );
-    const addButton: HTMLElement = fixture.nativeElement.querySelector(
-      'button#addLanguage'
-    );
-
-    input.value = 'lang';
-    input.dispatchEvent(new Event('input'));
-    addButton.click();
-    expect(component.languageError).toBe('notFound');
-  });
-
-  it('should not add language if already exists', () => {
-    component.languages = [
-      { code: 'lc', name: 'Language test' },
-      { code: 'ab', name: 'Added' },
-    ];
+  it('should set languages', () => {
+    component.countries = [{ code: 'ct', name: 'Country' }];
+    component.languages = [{ code: 'lg', name: 'Lang' }];
     component.profile = {
       age: null,
-      country: '',
-      languages: [{ code: 'ab', level: 2 }],
+      country: 'ct',
+      languages: [{ code: 'lg', level: 2 }],
       name: 'User',
     };
     fixture.detectChanges();
     component.ngOnChanges({
+      countries: new SimpleChange(null, component.countries, true),
       languages: new SimpleChange(null, component.languages, true),
       profile: new SimpleChange(null, component.profile, true),
     });
 
-    const input: HTMLInputElement = fixture.nativeElement.querySelector(
-      'input#language'
-    );
-    const addButton: HTMLElement = fixture.nativeElement.querySelector(
-      'button#addLanguage'
-    );
-
-    input.value = 'Added';
-    input.dispatchEvent(new Event('input'));
-    addButton.click();
-    expect(component.languageError).toBe('exists');
-  });
-
-  it('should remove language', () => {
-    component.languages = [
-      { code: 'lc', name: 'Language test' },
-      { code: 'ab', name: 'Added' },
-    ];
-    component.profile = {
-      age: null,
-      country: '',
-      languages: [{ code: 'ab', level: 2 }],
-      name: 'User',
-    };
-    component.ngOnChanges({
-      languages: new SimpleChange(null, component.languages, true),
-      profile: new SimpleChange(null, component.profile, true),
-    });
-    fixture.detectChanges();
-
-    const removeButton: HTMLInputElement = fixture.nativeElement.querySelector(
-      'button'
-    );
-
-    removeButton.click();
-    expect(component.languagesForm.length).toBe(0);
+    expect(component.profileForm.get('country').value).toBe('Country');
+    expect(component.languagesFormArray.length).toBe(1);
+    expect(component.languagesFormArray.at(0).get('code').value).toBe('lg');
+    expect(component.languagesFormArray.at(0).get('level').value).toBe(2);
   });
 
   it('should not display any alerts', () => {

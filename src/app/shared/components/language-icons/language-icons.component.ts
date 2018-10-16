@@ -1,5 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input, HostBinding } from '@angular/core';
-import { LanguageQuery } from '@app/core/state';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  HostBinding,
+} from '@angular/core';
+import { LanguageQuery, Language } from '@app/core/state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,6 +22,9 @@ export class LanguageIconsComponent {
   constructor(private languageQuery: LanguageQuery) {}
 
   getName(index: number): string {
-    return this.languageQuery.getEntity(this.languages[index].code).name;
+    const language: Language = this.languageQuery.getEntity(
+      this.languages[index].code
+    );
+    return language ? language.name : '';
   }
 }

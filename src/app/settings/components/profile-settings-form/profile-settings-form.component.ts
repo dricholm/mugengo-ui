@@ -49,15 +49,15 @@ export class ProfileSettingsFormComponent implements OnChanges {
       validators: [Validators.max(999), Validators.min(1)],
     }),
     country: new FormControl(),
-    language: new FormControl(),
-    languages: new FormArray([]),
+    language: new FormGroup({
+      languages: new FormArray([]),
+      name: new FormControl(),
+    }),
     name: new FormControl(null, {
       updateOn: 'submit',
       validators: [Validators.required],
     }),
   });
-
-  languageError: string;
 
   submitClicked: boolean;
 
@@ -79,10 +79,10 @@ export class ProfileSettingsFormComponent implements OnChanges {
 
       this.profileForm.get('name').setValue(changes.profile.currentValue.name);
 
-      this.languagesForm.controls = [];
+      this.languagesFormArray.controls = [];
       changes.profile.currentValue.languages.forEach(
         (language: { id: number; code: string; level: number }) => {
-          this.languagesForm.push(
+          this.languagesFormArray.push(
             new FormGroup({
               code: new FormControl(language.code, [Validators.required]),
               level: new FormControl(language.level, [Validators.required]),
@@ -91,38 +91,6 @@ export class ProfileSettingsFormComponent implements OnChanges {
         }
       );
     }
-  }
-
-  addLanguage(languageName: string) {
-    const selectedLanguage: Language = this.languages.find(
-      language => language.name === languageName
-    );
-
-    if (selectedLanguage == null) {
-      this.languageError = 'notFound';
-      return;
-    }
-    if (
-      this.languagesForm.controls.some(
-        (control: FormControl) => control.value.code === selectedLanguage.code
-      )
-    ) {
-      this.languageError = 'exists';
-      return;
-    }
-
-    this.languageError = null;
-    this.languagesForm.push(
-      new FormGroup({
-        code: new FormControl(selectedLanguage.code, [Validators.required]),
-        level: new FormControl(1, [Validators.required]),
-      })
-    );
-    this.profileForm.get('language').setValue(null);
-  }
-
-  removeLanguage(index: number) {
-    this.languagesForm.removeAt(index);
   }
 
   onSubmit(event: Event) {
@@ -135,14 +103,14 @@ export class ProfileSettingsFormComponent implements OnChanges {
       this.submit.emit({
         age: this.profileForm.value.age,
         country: selectedCountry ? selectedCountry.code : null,
-        languages: this.profileForm.value.languages,
+        languages: this.languagesFormArray.value,
         name: this.profileForm.value.name,
       });
     }
   }
 
-  get languagesForm(): FormArray {
-    return this.profileForm.get('languages') as FormArray;
+  get languagesFormArray(): FormArray {
+    return this.profileForm.get('language').get('languages') as FormArray;
   }
 
   get formDisabled(): 'disabled' | null {
