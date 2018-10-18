@@ -1,0 +1,7 @@
+<mgg-user-nav></mgg-user-nav>
+
+<div class="container">
+  <section [@router]="outlet.isActivated ? outlet.activatedRoute : ''">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </section>
+</div>

@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     canActivate: [AuthGuard],
-    loadChildren: '@app/users/users.module#UsersModule',
+    loadChildren: '@app/user/user.module#UserModule',
     path: 'users',
   },
 ];

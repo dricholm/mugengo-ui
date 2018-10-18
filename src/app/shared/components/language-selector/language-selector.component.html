@@ -34,14 +34,14 @@
 
       <div *ngIf="search" class="grid-search">
         <div class="custom-control custom-radio">
-          <input type="radio" [id]="getId('search', i, 1)" formControlName="search" class="custom-control-input"
+          <input type="radio" [id]="getId('relation', i, 1)" formControlName="relation" class="custom-control-input"
             [value]="1" [attr.disabled]="formDisabled">
-          <label class="custom-control-label" [for]="getId('search', i, 1)">exactly</label>
+          <label class="custom-control-label" [for]="getId('relation', i, 1)">at least</label>
         </div>
         <div class="custom-control custom-radio">
-          <input type="radio" [id]="getId('search', i, 2)" formControlName="search" class="custom-control-input"
+          <input type="radio" [id]="getId('relation', i, 2)" formControlName="relation" class="custom-control-input"
             [value]="2" [attr.disabled]="formDisabled">
-          <label class="custom-control-label" [for]="getId('search', i, 2)">at least</label>
+          <label class="custom-control-label" [for]="getId('relation', i, 2)">exactly</label>
         </div>
       </div>
 

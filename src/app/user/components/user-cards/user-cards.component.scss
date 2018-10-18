@@ -1,0 +1,16 @@
+@import '~styles/declarations';
+
+:host {
+  display: grid;
+  gap: map-get($spacers, 2);
+  /* autoprefixer: off */
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr;
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

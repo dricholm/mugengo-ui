@@ -1,5 +1,9 @@
 @import '@~styles/declarations';
 
+.badge {
+  font-size: $font-size-base;
+}
+
 span:not(:last-child) {
   margin-right: map-get($spacers, 1);
 }
