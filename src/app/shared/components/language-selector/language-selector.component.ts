@@ -44,7 +44,7 @@ export class LanguageSelectorComponent {
         new FormGroup({
           code: new FormControl(selectedLanguage.code, [Validators.required]),
           level: new FormControl(1, [Validators.required]),
-          search: new FormControl(1, [Validators.required]),
+          relation: new FormControl(1, [Validators.required]),
         })
       );
     } else {

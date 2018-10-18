@@ -1,0 +1,14 @@
+<div class="card my-4">
+  <div class="card-body">
+    <h4 class="card-title">
+      Search conditions
+    </h4>
+
+    <mgg-user-search-form [countries]="countries$ | async" [languages]="languages$ | async" [error]="error$ | async"
+      [loading]="loading$ | async" (submit)="onSubmit($event)"></mgg-user-search-form>
+  </div>
+</div>
+
+<section class="mb-4">
+  <mgg-user-cards [users]="usersResult$ | async"></mgg-user-cards>
+</section>

@@ -105,7 +105,7 @@ describe('LanguageSelectorComponent', () => {
         new FormGroup({
           code: new FormControl('ab'),
           level: new FormControl(2),
-          search: new FormControl(1),
+          relation: new FormControl(1),
         }),
       ]),
       name: new FormControl(),
@@ -122,7 +122,7 @@ describe('LanguageSelectorComponent', () => {
         new FormGroup({
           code: new FormControl('ab'),
           level: new FormControl(2),
-          search: new FormControl(1),
+          relation: new FormControl(1),
         }),
       ]),
       name: new FormControl(),
@@ -145,7 +145,7 @@ describe('LanguageSelectorComponent', () => {
     expect(component.array.length).toBe(2);
     expect(component.array.at(1).get('code').value).toBe('cd');
     expect(component.array.at(1).get('level').value).toBe(1);
-    expect(component.array.at(1).get('search').value).toBe(1);
+    expect(component.array.at(1).get('relation').value).toBe(1);
   });
 
   it('should set exists error', () => {

@@ -1,28 +1,34 @@
-<form [formGroup]="profileForm" (submit)="onSubmit($event)">
+<form [formGroup]="form" (submit)="onSubmit($event)">
 
   <div class="form-group row">
     <label for="name" class="col-form-label col-12 col-md-3">
-      Display name
+      Name
     </label>
     <div class="col-12 col-md-9">
-      <input formControlName="name" type="text" class="form-control" id="name" placeholder="Your display name"
-        [class.is-invalid]="submitClicked && profileForm.get('name').errors" style="max-width: 20rem" [attr.disabled]="formDisabled">
-      <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('name').errors" @height>
-        Please enter a name.
-      </div>
+      <input formControlName="name" type="text" class="form-control" id="name" placeholder="Search for a name"
+        [class.is-invalid]="submitClicked && form.get('name').errors" style="max-width: 20rem" [attr.disabled]="formDisabled">
     </div>
   </div>
 
   <div class="form-group row">
-    <label for="age" class="col-form-label col-12 col-md-3">
+    <label for="fromAge" class="col-form-label col-12 col-md-3">
       Age
-      <span class="text-muted">(optional)</span>
     </label>
-    <div class="col-12 col-md-9">
-      <input formControlName="age" type="number" class="form-control" id="age" placeholder="Your age"
-        [class.is-invalid]="submitClicked && profileForm.get('age').errors" style="max-width: 7rem" [attr.disabled]="formDisabled">
-      <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('age').errors" @height>
-        Please enter your age as a positive number.
+    <div class="col-12 col-md-9" formGroupName="age">
+      <div class="d-flex align-items-center">
+        <input formControlName="from" type="number" class="form-control" id="fromAge" placeholder="Minimum"
+          [class.is-invalid]="submitClicked && ageError || fromAgeError" style="max-width: 7rem" [attr.disabled]="formDisabled">
+        <span class="mx-2">
+          -
+        </span>
+        <input formControlName="to" type="number" class="form-control" id="toAge" placeholder="Maximum"
+          [class.is-invalid]="submitClicked && ageError || toAgeError" style="max-width: 7rem" [attr.disabled]="formDisabled">
+      </div>
+      <div class="invalid-feedback d-block" *ngIf="submitClicked && fromAgeError || toAgeError" @height>
+        Please enter positive numbers.
+      </div>
+      <div class="invalid-feedback d-block" *ngIf="submitClicked && ageError" @height>
+        The minimum age must be smaller than the maximum age.
       </div>
     </div>
   </div>
@@ -30,13 +36,12 @@
   <div class="form-group row">
     <label for="country" class="col-form-label col-12 col-md-3">
       Country
-      <span class="text-muted">(optional)</span>
     </label>
     <div class="col-12 col-md-9">
       <input formControlName="country" type="text" class="form-control" id="country" placeholder="Start typing a country name"
-        [class.is-invalid]="submitClicked && profileForm.get('country').errors" style="max-width: 20rem"
-        [attr.disabled]="formDisabled" [typeahead]="countries" typeaheadOptionField="name">
-      <div class="invalid-feedback" *ngIf="submitClicked && profileForm.get('country').errors" @height>
+        [class.is-invalid]="submitClicked && form.get('country').errors" style="max-width: 20rem" [attr.disabled]="formDisabled"
+        [typeahead]="countries" typeaheadOptionField="name">
+      <div class="invalid-feedback" *ngIf="submitClicked && form.get('country').errors" @height>
         Please select a country from the list.
       </div>
     </div>
@@ -45,26 +50,20 @@
   <div class="form-group row">
     <label for="languageName" class="col-form-label col-12 col-md-3">
       Languages
-      <span class="text-muted">(optional)</span>
     </label>
 
     <div class="col-12 col-md-9">
-      <mgg-language-selector [form]="profileForm.get('language')" [languages]="languages" [formDisabled]="formDisabled"></mgg-language-selector>
+      <mgg-language-selector [form]="form.get('language')" [languages]="languages" [search]="true" [formDisabled]="formDisabled"></mgg-language-selector>
     </div>
   </div>
 
   <div class="submit-container">
     <button type="submit" class="btn btn-primary" [disabled]="formDisabled">
       <fa-icon *ngIf="loading" icon="circle-notch" [fixedWidth]="true" [spin]="true"></fa-icon>
-      Save profile
+      Search
     </button>
   </div>
 </form>
-
-<div class="alert alert-success mt-3 mb-0" *ngIf="success" @height>
-  <h5 class="alert-heading">Success</h5>
-  Profile saved.
-</div>
 
 <div class="alert alert-danger mt-3 mb-0" *ngIf="error" [ngSwitch]="error" @height>
   <ng-container *ngSwitchCase="400">

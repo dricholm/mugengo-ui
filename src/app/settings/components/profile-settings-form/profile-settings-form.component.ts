@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { trigger, transition, useAnimation } from '@angular/animations';
@@ -27,7 +28,7 @@ import { inArrayValidator } from '@app/shared/validators';
   styleUrls: ['./profile-settings-form.component.scss'],
   templateUrl: './profile-settings-form.component.html',
 })
-export class ProfileSettingsFormComponent implements OnChanges {
+export class ProfileSettingsFormComponent implements OnInit, OnChanges {
   @Input()
   error: number;
   @Input()
@@ -43,23 +44,32 @@ export class ProfileSettingsFormComponent implements OnChanges {
   @Output()
   submit: EventEmitter<Profile> = new EventEmitter<Profile>();
 
-  profileForm: FormGroup = new FormGroup({
-    age: new FormControl(null, {
-      updateOn: 'submit',
-      validators: [Validators.max(999), Validators.min(1)],
-    }),
-    country: new FormControl(),
-    language: new FormGroup({
-      languages: new FormArray([]),
-      name: new FormControl(),
-    }),
-    name: new FormControl(null, {
-      updateOn: 'submit',
-      validators: [Validators.required],
-    }),
-  });
+  profileForm: FormGroup;
 
   submitClicked: boolean;
+
+  ngOnInit() {
+    this.profileForm = new FormGroup({
+      age: new FormControl(null, {
+        updateOn: 'submit',
+        validators: [Validators.max(999), Validators.min(1)],
+      }),
+      country: new FormControl(null, {
+        updateOn: 'submit',
+        validators: [
+          inArrayValidator(this.countries.map(country => country.name)),
+        ],
+      }),
+      language: new FormGroup({
+        languages: new FormArray([]),
+        name: new FormControl(),
+      }),
+      name: new FormControl(null, {
+        updateOn: 'submit',
+        validators: [Validators.required],
+      }),
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.profile && changes.profile.currentValue) {
@@ -71,11 +81,6 @@ export class ProfileSettingsFormComponent implements OnChanges {
       if (selectedCountry != null) {
         this.profileForm.get('country').setValue(selectedCountry.name);
       }
-      this.profileForm
-        .get('country')
-        .setValidators([
-          inArrayValidator(this.countries.map(country => country.name)),
-        ]);
 
       this.profileForm.get('name').setValue(changes.profile.currentValue.name);
 
